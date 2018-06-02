@@ -37,5 +37,7 @@ module.exports = {
             "always"
         ],
         "prefer-const": 2,
+        "prefer-destructuring": ["error", {"object": true, "array": false}],
+        "object-curly-spacing": ["error", "always"],
     }
 };
