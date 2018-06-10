@@ -1,28 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import TrackList from './components/TrackList/';
+import SoundCloud from 'soundcloud';
+import { Router, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import { configureStore } from './store';
-import * as actions from './actions';
+import { CLIENT_ID, REDIRECT_URI } from './config';
+import createRoutes from './routes';
 
-const tracks = [
-  {
-    id: 1,
-    title: 'Em của ngày hôm qua'
-  },
-  {
-    id: 2,
-    title: 'Cơn mưa ngang qua'
-  }
-];
+SoundCloud.initialize({
+  client_id: CLIENT_ID,
+  redirect_uri: REDIRECT_URI
+});
 
 const store = configureStore();
-store.dispatch(actions.setTracks(tracks));
-// store.dispatch(actions.setTracks(tracks));
+const history = syncHistoryWithStore(browserHistory, store);
+const routes = createRoutes();
 
 ReactDOM.render(
   <Provider store={store}>
-    <TrackList />
+    <Router history={history} routes={routes} />
   </Provider>,
   document.getElementById('app')
 );

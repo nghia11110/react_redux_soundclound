@@ -1,7 +1,6 @@
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+import HtmlWebpackPlugin  from 'html-webpack-plugin';
 
-module.exports = {
+export default {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
@@ -16,7 +15,8 @@ module.exports = {
 
   devServer: {
     contentBase: './build',
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
 
   module: {
@@ -37,4 +37,4 @@ module.exports = {
       inject: true
     })
   ]
-}
+};
