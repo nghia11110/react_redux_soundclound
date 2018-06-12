@@ -1,11 +1,16 @@
 import { ActionTypes } from '../core/constants';
 
-const initialState = [];
+const initialState = {
+  tracks: [],
+  activeTrack: {}
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
   case ActionTypes.TRACKS_SET:
     return setTracks(state, action);
+  case ActionTypes.TRACK_PLAY:
+      return setActiveTrack(state, action)
   }
 
   return state;
@@ -13,5 +18,10 @@ export default function(state = initialState, action) {
 
 function setTracks(state, action) {
   const { tracks } = action;
-  return [...state, ...tracks];
+  return {...state, tracks};
+}
+
+function setActiveTrack(state, action) {
+  const {track} = action;
+  return {...state, activeTrack: track};
 }

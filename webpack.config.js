@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -35,6 +36,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       inject: true
-    })
+    }),
+    new webpack.DefinePlugin({
+      __CLIENT_ID__: JSON.stringify(process.env.CLIENT_ID || '1fb0d04a94f035059b0424154fd1b18c'),
+      __REDIRECT_URI__: JSON.stringify(process.env.REDIRECT_URI || 'http://localhost:8080/callback')
+    }),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
   ]
 };

@@ -5,7 +5,7 @@ const TIME_OUT = 100;
 export default class Callback extends Component {
 
   componentDidMount() {
-    setTimeout(opener.SoundCloud.connectCallback, TIME_OUT);
+    setTimeout(opener.SC.connectCallback, TIME_OUT);
   }
 
   render() {

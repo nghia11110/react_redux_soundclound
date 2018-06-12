@@ -1,17 +1,41 @@
 import SoundCloud from 'soundcloud';
+import { ActionTypes } from '../core/constants';
+import { setTracks } from './tracks';
 
 const API_HOST = '//api.soundcloud.com';
 
 export function auth() {
-  SoundCloud.connect().then((session) => {
-    fetchMe(session)
-  });
+  return (dispatch) => {
+    SoundCloud.connect().then((session) => {
+      dispatch(fetchMe(session));
+      dispatch(fetchTracks(session));
+    });
+  };
 }
 
 function fetchMe(session) {
-  fetch(`${API_HOST}/me?oauth_token=${session.oauth_token}`)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log('me', data);
-    });
+  return (dispatch) => {
+    fetch(`${API_HOST}/me?oauth_token=${session.oauth_token}`)
+      .then((res) => res.json())
+      .then((user) => {
+        dispatch(setUser(user));
+      });
+  };
+}
+
+function setUser(user) {
+  return {
+    type: ActionTypes.ME_SET,
+    user
+  };
+}
+
+function fetchTracks(session) {
+  return (dispatch) => {
+    fetch(`${API_HOST}/me/activities?limit=10&oauth_token=${session.oauth_token}`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(setTracks(data.collection));
+      });
+  };
 }
