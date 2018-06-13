@@ -59,9 +59,7 @@ export default class TrackList extends Component {
         <div>
           {
             Object.keys(activeTrack).length ?
-              <audio id='player' ref='audio' controls>
-                <source src={`${activeTrack.origin.stream_url}?client_id=${clientId}`} type='audio/ogg' />
-              </audio>
+              <audio id='player' ref='audio' controls src={`${activeTrack.origin.stream_url}?client_id=${clientId}`} />
               : null
           }
         </div>
